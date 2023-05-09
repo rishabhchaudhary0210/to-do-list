@@ -1,0 +1,56 @@
+<!-- Both Layouts and Templates can be made by using EJS -->
+<!-- Layouts == where we use variables to add data to some specific things -->
+<!-- Templates == which contain same basic construction like header footer or navbars to be applied on all routes and you can change rest data based on requirement -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="mainContainer">
+        <h1 class="heading">To-Do-List</h1>
+        <h2><%=listTitle%></h2>
+        <div class="listContainer">
+            <form action="/" method="post" class="newTask">
+                <!-- <label for="newTask">Add Task : </label> -->
+                <input name="newTask" type="text" placeholder="Enter Task" id="textBox" required>
+                <button type="submit" class="btn" name="list" value="<%=listTitle%>">+</button>
+            </form>
+            <% for(var i=0;i<newItems.length;i++){ %>
+                <form action="/delete" method="post">
+                <div class="listBox">
+                    <input type="checkbox"><li class="list"><%=newItems[i].name%></li><button class="delete" type="submit" name="deleteTask" value="<%=newItems[i].name%>"><img src="/trash-bin.png" alt="Delete" ></button>
+                    <input type="hidden" name="deleteList" value="<%=listTitle%>">
+                </div>
+            </form>
+            <%  } %>
+            <form action="/reset" method="post" class="newTask" >
+                <button type="submit" id="reset" class="btn" name="resetList" value="<%=listTitle%>">Clear</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const resetBtn = document.getElementById("reset");
+        // resetForm.style.display="none";
+        // @ts-ignore
+        if(<%=(newItems.length)%>==0){
+            resetBtn.style.display="none";
+        }
+        else{
+            resetBtn.style.display="block";
+        }
+        // console.log(newItems.length+"Hello");
+        const textBox = document.querySelector("#textBox");
+        addEventListener("keypress",(e)=>{
+                textBox.focus();
+        });
+
+
+    </script>
+</body>
+</html>
